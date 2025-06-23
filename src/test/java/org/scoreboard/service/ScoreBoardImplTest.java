@@ -123,4 +123,23 @@ class ScoreBoardImplTest {
         });
     }
 
+    @Test
+    void startGameCheckScore() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int expectedHomeScore = 0;
+        int expectedAwayScore = 0;
+
+        //when
+        scoreBoard.startGame(homeTeam, awayTeam);
+
+        //then
+        List<Match> summary = matchRepository.findAll();
+
+        Match match = summary.getFirst();
+        assertEquals(expectedHomeScore, match.getHomeScore());
+        assertEquals(expectedAwayScore, match.getAwayScore());
+    }
+
 }
