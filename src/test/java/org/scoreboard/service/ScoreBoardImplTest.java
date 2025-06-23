@@ -8,6 +8,7 @@ import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;
 import org.scoreboard.repo.MatchRepositoryImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -384,5 +385,36 @@ class ScoreBoardImplTest {
 
         assertEquals(homeTeam1, summary.getLast().getHomeTeam());
         assertEquals(awayTeam1, summary.getLast().getAwayTeam());
+    }
+
+    @Test
+    void getSummarySortsByRecencyIfScoreEqual() {
+        //given
+        String homeTeam1 = "Mexico";
+        String awayTeam1 = "Canada";
+        String homeTeam2 = "Spain";
+        String awayTeam2 = "Brazil";
+        Match olderMatch = createAndStartMatch(homeTeam1, awayTeam1, 2, 2, LocalDateTime.now().minusSeconds(10));
+        Match newerMatch = createAndStartMatch(homeTeam2, awayTeam2, 2, 2, LocalDateTime.now());
+
+        // when
+        List<Match> summary = scoreBoard.getSummary();
+
+        // then
+        assertEquals(newerMatch.getHomeTeam(), summary.getFirst().getHomeTeam());
+        assertEquals(newerMatch.getAwayTeam(), summary.getFirst().getAwayTeam());
+        assertEquals(olderMatch.getHomeTeam(), summary.getLast().getHomeTeam());
+        assertEquals(olderMatch.getAwayTeam(), summary.getLast().getAwayTeam());
+    }
+
+    private Match createAndStartMatch(String home, String away, int homeScore, int awayScore, LocalDateTime startTime) {
+        scoreBoard.startGame(home, away);
+        scoreBoard.updateScore(home, away, homeScore, awayScore);
+
+        Match match = matchRepository.findByTeams(home, away)
+                .orElseThrow(() -> new IllegalStateException("Match not found"));
+
+        match.setStartTime(startTime);
+        return match;
     }
 }
