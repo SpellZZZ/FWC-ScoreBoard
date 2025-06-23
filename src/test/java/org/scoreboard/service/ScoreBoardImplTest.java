@@ -87,4 +87,16 @@ class ScoreBoardImplTest {
         });
     }
 
+    @Test
+    void startGameTeamPlayWithItself() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Mexico";
+
+        //when then
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.startGame(homeTeam, awayTeam);
+        });
+    }
+
 }
