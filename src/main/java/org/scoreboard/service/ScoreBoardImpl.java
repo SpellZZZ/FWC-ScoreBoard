@@ -36,7 +36,7 @@ public class ScoreBoardImpl implements ScoreBoard {
 
     @Override
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
-
+        validateTeamNames(homeTeam, awayTeam);
         validateScore(homeScore, awayScore);
 
         Match match = matchRepository.findByTeams(homeTeam, awayTeam)
@@ -49,6 +49,12 @@ public class ScoreBoardImpl implements ScoreBoard {
     private void validateScore(int homeScore, int awayScore) {
         if (homeScore < 0 || awayScore < 0) {
             throw new ScoreException("Scores must be non-negative");
+        }
+    }
+
+    private void validateTeamNames(String homeTeam, String awayTeam) {
+        if (homeTeam == null || awayTeam == null || homeTeam.isEmpty() || awayTeam.isEmpty()) {
+            throw new WCMatchException("Team names must not be null or empty");
         }
     }
 }
