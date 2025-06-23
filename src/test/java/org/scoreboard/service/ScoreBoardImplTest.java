@@ -160,4 +160,17 @@ class ScoreBoardImplTest {
         assertEquals(awayScore, match.getAwayScore());
     }
 
+    @Test
+    void updateScoreThrowsIfMatchNotFound() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int homeScore = 3;
+        int awayScore = 2;
+
+        //when then
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.updateScore(homeTeam, awayTeam, homeScore, awayScore);
+        });
+    }
 }
