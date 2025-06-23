@@ -189,4 +189,19 @@ class ScoreBoardImplTest {
             scoreBoard.updateScore(homeTeam, awayTeam, homeScore, awayScore);
         });
     }
+
+    @Test
+    void updateScoreThrowsOnNegativeScoreNegativeFirst() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int homeScore = -3;
+        int awayScore = 2;
+        scoreBoard.startGame(homeTeam, awayTeam);
+
+        //when then
+        assertThrows(ScoreException.class, () -> {
+            scoreBoard.updateScore(homeTeam, awayTeam, homeScore, awayScore);
+        });
+    }
 }
