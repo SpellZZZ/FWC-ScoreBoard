@@ -360,4 +360,29 @@ class ScoreBoardImplTest {
         assertEquals(homeTeam1, matches.getFirst().getHomeTeam());
         assertEquals(awayTeam1, matches.getFirst().getAwayTeam());
     }
+
+    @Test
+    void getSummarySortsByTotalScoreDescending() {
+        //given
+        String homeTeam1 = "Mexico";
+        String awayTeam1 = "Canada";
+        String homeTeam2 = "Spain";
+        String awayTeam2 = "Brazil";
+
+        scoreBoard.startGame(homeTeam1, awayTeam1);
+        scoreBoard.startGame(homeTeam2, awayTeam2);
+
+        //when
+        scoreBoard.updateScore(homeTeam1, awayTeam1, 1, 1); // 2
+        scoreBoard.updateScore(homeTeam2, awayTeam2, 3, 2); // 5
+
+        //then
+        List<Match> summary = scoreBoard.getSummary();
+
+        assertEquals(homeTeam2, summary.getFirst().getHomeTeam());
+        assertEquals(awayTeam2, summary.getFirst().getAwayTeam());
+
+        assertEquals(homeTeam1, summary.getLast().getHomeTeam());
+        assertEquals(awayTeam1, summary.getLast().getAwayTeam());
+    }
 }
