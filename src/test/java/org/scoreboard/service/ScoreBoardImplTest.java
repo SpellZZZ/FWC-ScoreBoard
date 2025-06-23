@@ -282,4 +282,19 @@ class ScoreBoardImplTest {
         assertEquals(newAwayScore, updatedMatch.getAwayScore());
     }
 
+    @Test
+    void finishGameRemovesMatchFromList() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int expectedRepoSize = 0;
+        scoreBoard.startGame(homeTeam, awayTeam);
+
+        //when
+        scoreBoard.finishGame(homeTeam, awayTeam);
+
+        //then
+        assertEquals(expectedRepoSize, matchRepository.findAll().size());
+    }
+
 }
