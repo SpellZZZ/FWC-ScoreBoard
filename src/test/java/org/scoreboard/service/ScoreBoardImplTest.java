@@ -239,4 +239,23 @@ class ScoreBoardImplTest {
         });
     }
 
+    @Test
+    void updateScoreThrowsIfTeamsNull() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        String nullTeam = null;
+        int homeScore = 3;
+        int awayScore = 2;
+
+        //when then
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.updateScore(nullTeam, awayTeam, homeScore, awayScore);
+        });
+
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.updateScore(homeTeam, nullTeam, homeScore, awayScore);
+        });
+    }
+
 }
