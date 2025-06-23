@@ -14,6 +14,10 @@ public class ScoreBoardImpl implements ScoreBoard {
     @Override
     public void startGame(String homeTeam, String awayTeam) {
 
+        if (homeTeam.equals(awayTeam)) {
+            throw new WCMatchException("A team cannot play against itself");
+        }
+
         boolean matchExists = matchRepository.findAll().stream()
                 .anyMatch(m -> m.getHomeTeam().equals(homeTeam) || m.getAwayTeam().equals(awayTeam));
 
