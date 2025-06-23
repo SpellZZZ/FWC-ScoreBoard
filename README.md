@@ -82,3 +82,10 @@ Result of jacoco raport:
 - **`ScoreBoardImpl`**  - Business logic implementation of `ScoreBoard`, with validation and sorting behavior.
 
 ---
+
+### Util
+
+- **`MatchSummaryComparator`**  - Custom comparator that sorts matches in the correct order.
+
+---
+
