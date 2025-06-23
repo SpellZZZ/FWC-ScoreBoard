@@ -142,4 +142,14 @@ class ScoreBoardImplTest {
         assertEquals(expectedAwayScore, match.getAwayScore());
     }
 
+    @Test
+    void updateScoreUpdatesScoreCorrectly() {
+        scoreBoard.startGame("Mexico", "Canada");
+        scoreBoard.updateScore("Mexico", "Canada", 3, 2);
+
+        Match match = matchRepository.findAll().getFirst();
+        assertEquals(3, match.getHomeScore());
+        assertEquals(2, match.getAwayScore());
+    }
+
 }
