@@ -44,4 +44,8 @@ public class Match {
     public LocalDateTime getStartTime() {
         return startTime;
     }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
 }
