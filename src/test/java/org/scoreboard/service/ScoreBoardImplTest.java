@@ -144,12 +144,16 @@ class ScoreBoardImplTest {
 
     @Test
     void updateScoreUpdatesScoreCorrectly() {
-        scoreBoard.startGame("Mexico", "Canada");
-        scoreBoard.updateScore("Mexico", "Canada", 3, 2);
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int homeScore = 3;
+        int awayScore = 2;
+        scoreBoard.startGame(homeTeam, awayTeam);
+        scoreBoard.updateScore("Mexico", "Canada", homeScore, awayScore);
 
         Match match = matchRepository.findAll().getFirst();
-        assertEquals(3, match.getHomeScore());
-        assertEquals(2, match.getAwayScore());
+        assertEquals(homeScore, match.getHomeScore());
+        assertEquals(awayScore, match.getAwayScore());
     }
 
 }
