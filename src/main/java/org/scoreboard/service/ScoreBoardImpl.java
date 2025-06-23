@@ -4,6 +4,9 @@ import org.scoreboard.exception.ScoreException;
 import org.scoreboard.exception.WCMatchException;
 import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;
+import org.scoreboard.util.MatchSummaryComparator;
+
+import java.util.List;
 
 public class ScoreBoardImpl implements ScoreBoard {
     private final MatchRepository matchRepository;
@@ -51,6 +54,15 @@ public class ScoreBoardImpl implements ScoreBoard {
                 .orElseThrow(() -> new WCMatchException("Match not found"));
 
         matchRepository.remove(matchToRemove);
+    }
+
+    @Override
+    public List<Match> getSummary() {
+        return List.copyOf(
+                matchRepository.findAll().stream()
+                        .sorted(new MatchSummaryComparator())
+                        .toList()
+        );
     }
 
     private void validateScore(int homeScore, int awayScore) {

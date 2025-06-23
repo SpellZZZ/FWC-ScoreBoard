@@ -14,6 +14,7 @@ public class Match {
         this.awayTeam = awayTeam;
         this.homeScore = 0;
         this.awayScore = 0;
+        this.startTime = LocalDateTime.now();
     }
 
     public String getHomeTeam() {
@@ -38,5 +39,9 @@ public class Match {
 
     public void setAwayScore(int awayScore) {
         this.awayScore = awayScore;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 }
