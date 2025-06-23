@@ -43,6 +43,16 @@ public class ScoreBoardImpl implements ScoreBoard {
         match.setAwayScore(awayScore);
     }
 
+    @Override
+    public void finishGame(String homeTeam, String awayTeam) {
+        validateTeamNames(homeTeam, awayTeam);
+
+        Match matchToRemove = matchRepository.findByTeams(homeTeam, awayTeam)
+                .orElseThrow(() -> new WCMatchException("Match not found"));
+
+        matchRepository.remove(matchToRemove);
+    }
+
     private void validateScore(int homeScore, int awayScore) {
         if (homeScore < 0 || awayScore < 0) {
             throw new ScoreException("Scores must be non-negative");

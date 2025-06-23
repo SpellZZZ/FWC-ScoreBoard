@@ -25,4 +25,9 @@ public class MatchRepositoryImpl implements MatchRepository {
                 .filter(m -> m.getHomeTeam().equals(homeTeam) && m.getAwayTeam().equals(awayTeam))
                 .findFirst();
     }
+
+    @Override
+    public void remove(Match matchToRemove) {
+        matches.remove(matchToRemove);
+    }
 }

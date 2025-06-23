@@ -9,4 +9,5 @@ public interface MatchRepository {
     void save(Match match);
     List<Match> findAll();
     Optional<Match> findByTeams(String homeTeam, String awayTeam);
+    void remove(Match matchToRemove);
 }
