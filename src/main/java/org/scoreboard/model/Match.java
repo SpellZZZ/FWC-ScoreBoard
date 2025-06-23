@@ -8,4 +8,17 @@ public class Match {
     private int homeScore;
     private int awayScore;
     private LocalDateTime startTime;
+
+    public Match(String homeTeam, String awayTeam) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+    }
+
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public String getAwayTeam() {
+        return awayTeam;
+    }
 }

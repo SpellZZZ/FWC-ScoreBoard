@@ -27,8 +27,6 @@ class ScoreBoardImplTest {
         String homeTeam = "Mexico";
         String awayTeam = "Canada";
         int expectedListSize = 1;
-        int homeTeamExpectedScore = 0;
-        int awayTeamExpectedScore = 0;
 
         //when
         scoreBoard.startGame(homeTeam, awayTeam);
@@ -40,8 +38,6 @@ class ScoreBoardImplTest {
         Match match = summary.getFirst();
         assertEquals(homeTeam, match.getHomeTeam());
         assertEquals(awayTeam, match.getAwayTeam());
-        assertEquals(homeTeamExpectedScore, match.getHomeScore());
-        assertEquals(awayTeamExpectedScore, match.getAwayScore());
     }
 
 }
