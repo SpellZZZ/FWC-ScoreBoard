@@ -18,17 +18,8 @@ public class ScoreBoardImpl implements ScoreBoard {
     @Override
     public void startGame(String homeTeam, String awayTeam) {
         validateTeamNames(homeTeam, awayTeam);
-
-        if (homeTeam.equals(awayTeam)) {
-            throw new WCMatchException("A team cannot play against itself");
-        }
-
-        boolean matchExists = matchRepository.findAll().stream()
-                .anyMatch(m -> m.getHomeTeam().equals(homeTeam) || m.getAwayTeam().equals(awayTeam));
-
-        if (matchExists) {
-            throw new WCMatchException("One of teams already play");
-        }
+        validateSameTeam(homeTeam, awayTeam);
+        validateMatchExists(homeTeam, awayTeam);
 
         Match match = new Match(homeTeam, awayTeam);
         matchRepository.save(match);
@@ -39,8 +30,7 @@ public class ScoreBoardImpl implements ScoreBoard {
         validateTeamNames(homeTeam, awayTeam);
         validateScore(homeScore, awayScore);
 
-        Match match = matchRepository.findByTeams(homeTeam, awayTeam)
-                .orElseThrow(() -> new WCMatchException("Match not found"));
+        Match match = findMatch(homeTeam, awayTeam);
 
         match.setHomeScore(homeScore);
         match.setAwayScore(awayScore);
@@ -50,8 +40,7 @@ public class ScoreBoardImpl implements ScoreBoard {
     public void finishGame(String homeTeam, String awayTeam) {
         validateTeamNames(homeTeam, awayTeam);
 
-        Match matchToRemove = matchRepository.findByTeams(homeTeam, awayTeam)
-                .orElseThrow(() -> new WCMatchException("Match not found"));
+        Match matchToRemove = findMatch(homeTeam, awayTeam);
 
         matchRepository.remove(matchToRemove);
     }
@@ -74,6 +63,26 @@ public class ScoreBoardImpl implements ScoreBoard {
     private void validateTeamNames(String homeTeam, String awayTeam) {
         if (homeTeam == null || awayTeam == null || homeTeam.isEmpty() || awayTeam.isEmpty()) {
             throw new WCMatchException("Team names must not be null or empty");
+        }
+    }
+
+    private void validateSameTeam(String homeTeam, String awayTeam) {
+        if (homeTeam.equals(awayTeam)) {
+            throw new WCMatchException("A team cannot play against itself");
+        }
+    }
+
+    private Match findMatch(String homeTeam, String awayTeam) {
+        return matchRepository.findByTeams(homeTeam, awayTeam)
+                .orElseThrow(() -> new WCMatchException("Match not found"));
+    }
+
+    private void validateMatchExists(String homeTeam, String awayTeam) {
+        boolean matchExists = matchRepository.findAll().stream()
+                .anyMatch(m -> m.getHomeTeam().equals(homeTeam) || m.getAwayTeam().equals(awayTeam));
+
+        if (matchExists) {
+            throw new WCMatchException("One of teams already play");
         }
     }
 }
