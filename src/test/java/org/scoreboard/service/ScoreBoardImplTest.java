@@ -258,4 +258,28 @@ class ScoreBoardImplTest {
         });
     }
 
+    @Test
+    void updateScoreCanHandleMultipleMatches() {
+        // given
+        String homeTeam1 = "Mexico";
+        String awayTeam1 = "Canada";
+        String homeTeam2 = "Spain";
+        String awayTeam2 = "Brazil";
+        int newHomeScore = 3;
+        int newAwayScore = 2;
+
+        scoreBoard.startGame(homeTeam1, awayTeam1);
+        scoreBoard.startGame(homeTeam2, awayTeam2);
+
+        // when
+        scoreBoard.updateScore(homeTeam2, awayTeam2, newHomeScore, newAwayScore);
+
+        // then
+        Match updatedMatch = matchRepository.findByTeams(homeTeam2, awayTeam2)
+                .orElseThrow(() -> new WCMatchException("Match not found"));
+
+        assertEquals(newHomeScore, updatedMatch.getHomeScore());
+        assertEquals(newAwayScore, updatedMatch.getAwayScore());
+    }
+
 }
