@@ -12,6 +12,8 @@ public class Match {
     public Match(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.homeScore = 0;
+        this.awayScore = 0;
     }
 
     public String getHomeTeam() {
@@ -20,5 +22,13 @@ public class Match {
 
     public String getAwayTeam() {
         return awayTeam;
+    }
+
+    public int getHomeScore() {
+        return homeScore;
+    }
+
+    public int getAwayScore() {
+        return awayScore;
     }
 }
