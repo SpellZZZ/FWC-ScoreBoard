@@ -40,4 +40,22 @@ class ScoreBoardImplTest {
         assertEquals(awayTeam, match.getAwayTeam());
     }
 
+    @Test
+    void startGameWithMoreThanOneMatchTest() {
+        //given
+        String firstHomeTeam = "Mexico";
+        String firstAwayTeam = "Canada";
+        String secondHomeTeam = "Spain";
+        String secondAwayTeam = "Brazil";
+        int expectedListSize = 2;
+
+        //when
+        scoreBoard.startGame(firstHomeTeam, firstAwayTeam);
+        scoreBoard.startGame(secondHomeTeam, secondAwayTeam);
+
+        //then
+        List<Match> summary = matchRepository.findAll();
+        assertEquals(expectedListSize, summary.size());
+    }
+
 }
