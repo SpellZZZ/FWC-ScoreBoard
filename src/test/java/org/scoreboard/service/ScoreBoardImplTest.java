@@ -297,4 +297,16 @@ class ScoreBoardImplTest {
         assertEquals(expectedRepoSize, matchRepository.findAll().size());
     }
 
+    @Test
+    void finishGameThrowsIfMatchNotFound() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+
+        //when then
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.finishGame(homeTeam, awayTeam);
+        });
+    }
+
 }
