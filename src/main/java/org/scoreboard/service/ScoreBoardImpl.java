@@ -32,4 +32,13 @@ public class ScoreBoardImpl implements ScoreBoard {
         Match match = new Match(homeTeam, awayTeam);
         matchRepository.save(match);
     }
+
+    @Override
+    public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        Match match = matchRepository.findByTeams(homeTeam, awayTeam)
+                .orElseThrow(() -> new WCMatchException("Match not found"));
+
+        match.setHomeScore(homeScore);
+        match.setAwayScore(awayScore);
+    }
 }
