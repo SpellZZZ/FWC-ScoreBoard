@@ -37,14 +37,18 @@ public class ScoreBoardImpl implements ScoreBoard {
     @Override
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
 
-        if (homeScore < 0 || awayScore < 0) {
-            throw new ScoreException("Scores must be non-negative");
-        }
+        validateScore(homeScore, awayScore);
 
         Match match = matchRepository.findByTeams(homeTeam, awayTeam)
                 .orElseThrow(() -> new WCMatchException("Match not found"));
 
         match.setHomeScore(homeScore);
         match.setAwayScore(awayScore);
+    }
+
+    private void validateScore(int homeScore, int awayScore) {
+        if (homeScore < 0 || awayScore < 0) {
+            throw new ScoreException("Scores must be non-negative");
+        }
     }
 }
