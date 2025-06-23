@@ -14,7 +14,7 @@ public class ScoreBoardImpl implements ScoreBoard {
     @Override
     public void startGame(String homeTeam, String awayTeam) {
 
-        if (homeTeam.isEmpty() || awayTeam.isEmpty()) {
+        if (homeTeam == null || awayTeam == null || homeTeam.isEmpty() || awayTeam.isEmpty()) {
             throw new WCMatchException("Team names must not be null or empty");
         }
 
