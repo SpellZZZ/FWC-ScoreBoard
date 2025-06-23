@@ -308,5 +308,34 @@ class ScoreBoardImplTest {
             scoreBoard.finishGame(homeTeam, awayTeam);
         });
     }
+    @Test
+    void finishGameThrowsIfTeamNamesAreNull() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        String nullTeam = null;
 
+        //when then
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.finishGame(nullTeam, awayTeam);
+        });
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.finishGame(homeTeam, nullTeam);
+        });
+    }
+
+    @Test
+    void finishGameThrowsIfTeamNamesAreEmpty() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        String emptyTeam = "";
+
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.finishGame(emptyTeam, awayTeam);
+        });
+        assertThrows(WCMatchException.class, () -> {
+            scoreBoard.finishGame(homeTeam, emptyTeam);
+        });
+    }
 }
