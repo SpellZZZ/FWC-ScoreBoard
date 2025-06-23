@@ -1,5 +1,6 @@
 package org.scoreboard.service;
 
+import org.scoreboard.exception.WCMatchException;
 import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;
 
@@ -12,6 +13,14 @@ public class ScoreBoardImpl implements ScoreBoard {
 
     @Override
     public void startGame(String homeTeam, String awayTeam) {
+
+        boolean matchExists = matchRepository.findAll().stream()
+                .anyMatch(m -> m.getHomeTeam().equals(homeTeam) || m.getAwayTeam().equals(awayTeam));
+
+        if (matchExists) {
+            throw new WCMatchException("One of teams already play");
+        }
+
         Match match = new Match(homeTeam, awayTeam);
         matchRepository.save(match);
     }

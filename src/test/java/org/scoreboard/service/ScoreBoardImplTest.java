@@ -2,6 +2,7 @@ package org.scoreboard.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.scoreboard.exception.WCMatchException;
 import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;
 import org.scoreboard.repo.MatchRepositoryImpl;
@@ -66,7 +67,7 @@ class ScoreBoardImplTest {
         scoreBoard.startGame(homeTeam, awayTeam);
 
         //when then
-        assertThrows(MatchException.class, () -> {
+        assertThrows(WCMatchException.class, () -> {
             scoreBoard.startGame(homeTeam, awayTeam);
         });
     }
