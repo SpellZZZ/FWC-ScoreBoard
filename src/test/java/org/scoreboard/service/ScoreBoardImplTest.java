@@ -58,4 +58,17 @@ class ScoreBoardImplTest {
         assertEquals(expectedListSize, summary.size());
     }
 
+    @Test
+    void startGameSameTeam() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        scoreBoard.startGame(homeTeam, awayTeam);
+
+        //when then
+        assertThrows(MatchException.class, () -> {
+            scoreBoard.startGame(homeTeam, awayTeam);
+        });
+    }
+
 }
