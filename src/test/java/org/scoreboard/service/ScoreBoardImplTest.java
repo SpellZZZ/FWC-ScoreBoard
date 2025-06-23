@@ -417,4 +417,19 @@ class ScoreBoardImplTest {
         match.setStartTime(startTime);
         return match;
     }
+
+    @Test
+    void getSummaryReturnsCopyOfList() {
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        int expectedSize = 1;
+        scoreBoard.startGame(homeTeam, awayTeam);
+        List<Match> summary = scoreBoard.getSummary();
+
+        //when then
+        assertThrows(UnsupportedOperationException.class, summary::clear);
+        assertEquals( expectedSize, scoreBoard.getSummary().size());
+
+    }
 }
