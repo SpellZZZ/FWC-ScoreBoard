@@ -2,6 +2,7 @@ package org.scoreboard.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.scoreboard.exception.ScoreException;
 import org.scoreboard.exception.WCMatchException;
 import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;

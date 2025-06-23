@@ -1,5 +1,6 @@
 package org.scoreboard.service;
 
+import org.scoreboard.exception.ScoreException;
 import org.scoreboard.exception.WCMatchException;
 import org.scoreboard.model.Match;
 import org.scoreboard.repo.MatchRepository;
@@ -35,6 +36,11 @@ public class ScoreBoardImpl implements ScoreBoard {
 
     @Override
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+
+        if (homeScore < 0 || awayScore < 0) {
+            throw new ScoreException("Scores must be non-negative");
+        }
+
         Match match = matchRepository.findByTeams(homeTeam, awayTeam)
                 .orElseThrow(() -> new WCMatchException("Match not found"));
 
