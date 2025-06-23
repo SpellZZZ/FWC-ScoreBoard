@@ -338,4 +338,26 @@ class ScoreBoardImplTest {
             scoreBoard.finishGame(homeTeam, emptyTeam);
         });
     }
+
+    @Test
+    void finishGameOnlyRemovesExactMatch() {
+        //given
+        String homeTeam1 = "Mexico";
+        String awayTeam1 = "Canada";
+        String homeTeam2 = "Spain";
+        String awayTeam2 = "Brazil";
+        int expectedSize = 1;
+
+        scoreBoard.startGame(homeTeam1, awayTeam1);
+        scoreBoard.startGame(homeTeam2, awayTeam2);
+
+        //when
+        scoreBoard.finishGame(homeTeam2, awayTeam2);
+
+        //then
+        List<Match> matches = matchRepository.findAll();
+        assertEquals(expectedSize, matches.size());
+        assertEquals(homeTeam1, matches.getFirst().getHomeTeam());
+        assertEquals(awayTeam1, matches.getFirst().getAwayTeam());
+    }
 }
