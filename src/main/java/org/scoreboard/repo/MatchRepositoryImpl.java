@@ -16,7 +16,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 
     @Override
     public List<Match> findAll() {
-        return matches;
+        return matches.stream().toList();
     }
 
     @Override
